@@ -15,6 +15,6 @@ Organized for my own convenience, each with my own tests under ./tests
 The basic search algorithm highlighted in Chang's paper is used as a main structure.\
 Various functions noted in the 2014 document are needed for the search to be done in a reasonable time. They are:
 * Target too low or high :heavy_check_mark:
-* Quick-Tricks/Later-Tricks :white_check_mark:
-* Tranposition Table :white_check_mark:
-* MoveOrdering :white_check_mark:
+* Quick-Tricks/Later-Tricks :cross_mark:
+* Tranposition Table :cross_mark:
+* MoveOrdering :cross_mark:
