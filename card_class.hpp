@@ -1,6 +1,6 @@
 /*  File: card_class.hpp
  *  Card class
- *  Yang Gan    21/07/2020
+ *  Yang Gan
  */
 
 #ifndef DDS_CARD_CLASS_H

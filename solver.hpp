@@ -1,12 +1,11 @@
 /*  File: solver.hpp
  *  Solver class
- *  Yang Gan    21/07/2020
+ *  Yang Gan
  */
 
 #ifndef DDS_SOLVER_H
 #define DDS_SOLVER_H
 
-#include <cstdlib>
 #include <unordered_map>
 
 #include "deal_class.hpp"

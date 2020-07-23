@@ -1,6 +1,6 @@
 /*  File: card_class.cpp
  *  Card class
- *  Yang Gan    21/07/2020
+ *  Yang Gan
  */
 
 #include "card_class.hpp"
@@ -106,10 +106,10 @@ int trick_winner(vector<Card> trick, int trump)
 
   for (auto &x : trick)
   {
-    if ( (trump == -1 && x.suit == lead_suit && x > out) ||
-          (out.suit != trump && x.suit == trump) || 
-          (out.suit != trump && x.suit == lead_suit && x > out) ||
-          (out.suit == trump && x.suit == trump && x > out) )
+    if ( (trump == -1 && x.suit == lead_suit && x > out) || // NT and followed suit
+          (out.suit != trump && x.suit == trump) || // Trump on a not-yet-trumped trick
+          (out.suit != trump && x.suit == lead_suit && x > out) || // Followed suit, win by rank
+          (out.suit == trump && x.suit == trump && x > out) ) // Over-trumped
       out = x;
   }
   return out.hand;

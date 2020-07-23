@@ -1,6 +1,6 @@
 /*  File: deal_class.cpp
  *  Play_state, State_hasher, State_eq, Deal classes
- *  Yang Gan    21/07/2020
+ *  Yang Gan
  */
 
 #include "deal_class.hpp"
@@ -9,7 +9,9 @@ using namespace std;
 
 
 /*** *** *** Play_state *** *** ***/
-
+/* Play information is stored as 64-bit integer
+ * Rightmost 52 bits: 0 = unplayed, 1 = played
+ */
 
 Play_state::Play_state()
 {
@@ -58,7 +60,7 @@ bool Play_state::card_state(const Card& card) const
 }
 
 int Play_state::A() const
-{
+{ // For hasher; represents state of top 5 cards in each suit
   int A = 0;
   for (int i = 8; i < 13; ++i)
   {
@@ -73,7 +75,7 @@ int Play_state::A() const
 }
 
 int Play_state::B() const
-{
+{ // For hasher; represents state of next 5 cards in each suit
   int B = 0;
   for (int i = 3; i < 8; ++i)
   {
@@ -90,7 +92,7 @@ int Play_state::B() const
 
 /*** *** *** State_hasher *** *** ***/
 size_t State_hasher::operator()(const Play_state& S) const
-{
+{ // XOR on top 5 and next 5 cards in each suit
   return static_cast<size_t> (S.A() ^ S.B());
 }
 
@@ -132,6 +134,8 @@ Deal::Deal( const Hand& north, const Hand& east,
 bool Deal::play_card(const Card card)
 {
   hands[card.hand].rem_card(card.val, card.suit);
+
+  // Recycle curr_trick memory if new trick initiated
   if (curr_trick.size() == 4 || curr_trick.empty()) 
   {
     past_tricks.push_back(curr_trick);
@@ -144,6 +148,7 @@ bool Deal::play_card(const Card card)
     curr_trick.push_back(card);
   }
 
+  // If played card completes a trick winner calculated
   if (curr_trick.size() == 4) 
   {
     --tricks_left;
@@ -159,6 +164,8 @@ bool Deal::unplay_card()
 {
   if (play_state.unplayed()) return false;
   if (curr_trick.size() == 4) ++tricks_left;
+
+  // Debugging
   try
   {
     if (curr_trick.empty()) throw 1;
@@ -168,6 +175,7 @@ bool Deal::unplay_card()
     cout << "unplay_card: trick is empty somehow" << endl;
     return false;
   }
+
   Card last_played = curr_trick.back();
   curr_trick.pop_back();
   hands[last_played.hand].add_card(last_played.val, last_played.suit);
@@ -175,6 +183,7 @@ bool Deal::unplay_card()
   play_state.unplay_card(last_played, action);
   play_state.to_play = last_played.hand;
 
+  // If unplaying first card of trick retrieve last trick
   if (curr_trick.empty() && !play_state.unplayed())
   {
     curr_suit = -1;
@@ -190,7 +199,7 @@ bool Deal::suit_empty(int suit) const
 }
 
 void Deal::get_from_suit(vector<Card>& target, int suit) const
-{
+{ // Retrieve top of equal valued cards, taking into account played cards
   for (auto it = hands[action].cards[suit].rbegin(); 
         it != hands[action].cards[suit].rend(); ++it)
   {
@@ -222,9 +231,8 @@ void Deal::get_from_suit(vector<Card>& target, int suit) const
   }
 }
 
-
 void Deal::generate_moves(vector<Card>& target) const
-{
+{ // Generate all valid cards to play
   if (curr_suit == -1 || suit_empty(curr_suit))
   {
     for (int i = 0; i < 4; ++i)
@@ -232,7 +240,6 @@ void Deal::generate_moves(vector<Card>& target) const
       get_from_suit(target, i);
     }
   }
-
   else
   {
     get_from_suit(target, curr_suit);
@@ -243,7 +250,6 @@ void Deal::generate_moves(vector<Card>& target) const
 bool Deal::last_trick()
 {
   // Requires exactly 4 cards left to play
-  assert(tricks_left == 1);
   vector<Card> trick;
   for (int i = 0; i < 4; ++i)
   {

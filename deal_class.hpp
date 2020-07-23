@@ -1,12 +1,10 @@
 /*  File: deal_class.hpp
  *  Play_state, State_hasher, State_eq, Deal classes
- *  Yang Gan    21/07/2020
+ *  Yang Gan
  */
 
 #ifndef DDS_DEAL_CLASS_H
 #define DDS_DEAL_CLASS_H
-
-#include <assert.h>
 
 #include "hand_class.hpp"
 

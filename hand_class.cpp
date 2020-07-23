@@ -1,6 +1,6 @@
 /*  File: hand_class.cpp
  *  Hands class
- *  Yang Gan    21/07/2020
+ *  Yang Gan
  */
 
 #include <algorithm>
@@ -8,8 +8,9 @@
 
 using namespace std;
 
-// Helper function
+
 void insert_cd(vector<Card>& target, Card& obj)
+// Helper: insert card into vector maintaining inc order
 {
   auto it = lower_bound( target.begin(), target.end(), obj );
   target.insert( it, obj );

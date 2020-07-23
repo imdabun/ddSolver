@@ -1,6 +1,6 @@
 /*  File: hand_class.hpp
  *  Hands class
- *  Yang Gan    21/07/2020
+ *  Yang Gan
  */
 
 #ifndef DDS_HAND_CLASS_H

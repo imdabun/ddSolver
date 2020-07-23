@@ -1,11 +1,10 @@
 /*  File: solver.cpp
  *  Solver class
- *  Yang Gan    21/07/2020
+ *  Yang Gan
  */
 
 #include "deal_class.hpp"
 #include "solver.hpp"
-#include <unordered_map>
 
 using namespace std;
 
