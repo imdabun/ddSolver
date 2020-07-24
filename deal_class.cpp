@@ -125,6 +125,17 @@ Deal::Deal( const Hand& north, const Hand& east,
     }
   }
 
+  for (int suit = 0; suit < 4; ++suit)
+  {
+    for (int dir = 0; dir < 4; ++dir)
+    {
+      if (hands[dir].cards[suit].empty())
+        highest_card[suit][dir] = -1;
+      else
+        highest_card[suit][dir] = hands[dir].cards[suit].back().val;
+    }
+  }
+
   play_state.to_play = action;
 
   // calculate tricks_left
@@ -157,7 +168,19 @@ bool Deal::play_card(const Card card)
   }
   else action = (action + 1) % 4;
   play_state.to_play = action;
-  return play_state.play_card(card, action);
+
+  bool res = play_state.play_card(card, action);
+  
+  if (res && card.val == highest_card[card.suit][card.hand])
+  {
+    if (hands[card.hand].cards[card.suit].empty())
+      highest_card[card.suit][card.hand] = -1;
+    else 
+      highest_card[card.suit][card.hand] 
+      = hands[card.hand].cards[card.suit].back().val;
+  }
+
+  return res;
 }
 
 bool Deal::unplay_card()
@@ -190,6 +213,12 @@ bool Deal::unplay_card()
     curr_trick = past_tricks.back();
     past_tricks.pop_back();
   } 
+
+  int suit = last_played.suit;
+  int dir = last_played.hand;
+  if (last_played.val > highest_card[suit][dir])
+    highest_card[suit][dir] = last_played.val;
+
   return true;
 }
 

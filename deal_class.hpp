@@ -57,6 +57,8 @@ class Deal
 public: 
   Play_state play_state;
 
+  int highest_card[4][4]; // [suit][dir]
+
   int action;
 
   int trump;
