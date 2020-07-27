@@ -20,7 +20,7 @@ public:
 
   Hand();
 
-  Hand(const std::vector<std::pair<int, int>>& cards, const int dir = 0);
+  Hand(const std::vector<std::pair<int, int>>& cards, int dir = 0);
 
   bool card_exists(int val, int suit);
 

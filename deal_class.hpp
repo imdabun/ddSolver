@@ -89,4 +89,6 @@ public:
   bool last_trick();
 };
 
+void print_deal(Deal deal);
+
 #endif

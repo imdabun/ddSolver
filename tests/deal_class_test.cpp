@@ -2,18 +2,6 @@
 
 using namespace std;
 
-void print_deal(Deal deal)
-{
-  cout << "North hand: " << endl;
-  cout << deal.hands[0] << endl;
-  cout << "East hand: " << endl;
-  cout << deal.hands[1] << endl;
-  cout << "South hand: " << endl;
-  cout << deal.hands[2] << endl;
-  cout << "West hand: " << endl;
-  cout << deal.hands[3] << endl;
-}
-
 int main()
 {
   Test_deals deals = Test_deals();

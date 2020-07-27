@@ -20,6 +20,7 @@ void QT_Solver::nt_quicktricks()
 {
   for (int suit = 0; suit < 4; ++suit)
   {
+    int to_add = 0;
     int ctrl_hand = 0;
     int top_card = ds.highest_card[suit][0];
     int sec_best = -1;
@@ -42,12 +43,14 @@ void QT_Solver::nt_quicktricks()
     if (top_card != -1)
     {
       auto it = ds.hands[ctrl_hand].cards[suit].rbegin();
-      quick_tricks[ctrl_hand]++;
-      while ((++it)->val > sec_best)
+      to_add++;
+      while ( ++it != ds.hands[ctrl_hand].cards[suit].rend() &&
+             it->val > sec_best)
       {
-        quick_tricks[ctrl_hand]++;
+        to_add++;
       }
     }
+    quick_tricks[ctrl_hand] += to_add;
   }
 }
 
@@ -70,11 +73,16 @@ void QT_Solver::suited_quicktricks()
       }
     }
 
-    int opp_ctrl;
+    int opp_ctrl = 13;
     if (suit != ds.trump)
     {
-      int opp_ctrl = min<int> (ds.hands[(ctrl_hand + 1) % 2].cards[suit].size(), 
-                      ds.hands[(ctrl_hand + 1) % 2 + 2].cards[suit].size());
+      int dir1 = (ctrl_hand + 1) % 2;
+      int dir2 = (ctrl_hand + 1) % 2 + 2;
+      int len1 = ds.hands[dir1].cards[suit].size();
+      int len2 = ds.hands[dir2].cards[suit].size();
+      int opp1 = ds.hands[dir1].cards[ds.trump].empty() ? 13 : len1;
+      int opp2 = ds.hands[dir2].cards[ds.trump].empty() ? 13 : len2;
+      opp_ctrl = min(opp1, opp2);
     }
 
     if (opp_ctrl != 0 && !ds.hands[(ctrl_hand + 2) % 4].cards[suit].empty())
@@ -84,8 +92,11 @@ void QT_Solver::suited_quicktricks()
     {
       auto it = ds.hands[ctrl_hand].cards[suit].rbegin();
       if (to_add < opp_ctrl) to_add ++;
-      while ((*(++it)).val > sec_best)
+      while ( ++it != ds.hands[ctrl_hand].cards[suit].rend() &&
+             it->val > sec_best)
+      {
         if (to_add < opp_ctrl) to_add ++;
+      }
     }
     quick_tricks[ctrl_hand] += to_add;
   }

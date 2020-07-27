@@ -5,6 +5,7 @@
 
 #include "deal_class.hpp"
 #include "solver.hpp"
+#include "quick_tricks.hpp"
 
 using namespace std;
 
@@ -26,7 +27,8 @@ void update_lo(deal_hashmp& memo, Play_state state, int new_lo, int max_pos)
   else
   {
     // update entry
-    (got->second).first = new_lo;
+    (got->second).first = max (new_lo, (got->second).first);
+
   }
 }
 
@@ -41,7 +43,7 @@ void update_hi(deal_hashmp& memo, Play_state state, int new_hi)
   else
   {
     // update entry
-    (got->second).second = new_hi;
+    (got->second).second = min (new_hi, (got->second).second);
   }
 }
 
@@ -54,7 +56,6 @@ bool Solver::ddSearch(int goal)
   if (search_max == 1)
   {
     bool ret = ds.last_trick();
-    if (ret) update_lo(memo, ds.play_state, 1, search_max);
     return ret;
   }
 
@@ -63,13 +64,21 @@ bool Solver::ddSearch(int goal)
   if (ds.curr_trick.size() == 4 || ds.curr_trick.empty())
   {
     trick_start = true;
+
+    // check hashmap FIRST
     auto got = memo.find(ds.play_state);
     if (got != memo.end())
     {
-      int lo = (got->second).first;
-      int hi = (got->second).second;
-      if (goal <= lo) return true;
-      if (goal >= hi) return false;
+      if (goal <= (got->second).first) return true;
+      if (goal >= (got->second).second) return false;
+    }
+
+    // find quick_tricks
+    QT_Solver qt_start = QT_Solver(ds);
+    if (goal <= qt_start.friendly_QT())
+    {
+      update_lo(memo, ds.play_state, qt_start.friendly_QT(), search_max);
+      return true;
     }
   }
 
@@ -110,7 +119,7 @@ bool Solver::ddSearch(int goal)
 
 int Solver::ddSolve()
 {
-  int hi = ds.tricks_left;
+  int hi = ds.tricks_left + 1;
   int lo = 0;
   while(lo + 1 < hi)
   {

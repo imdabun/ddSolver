@@ -295,3 +295,15 @@ bool Deal::last_trick()
   }
   return trick_winner(trick, trump) == action;
 }
+
+void print_deal(Deal deal)
+{
+  cout << "North hand: " << endl;
+  cout << deal.hands[0] << endl;
+  cout << "East hand: " << endl;
+  cout << deal.hands[1] << endl;
+  cout << "South hand: " << endl;
+  cout << deal.hands[2] << endl;
+  cout << "West hand: " << endl;
+  cout << deal.hands[3] << endl;
+}

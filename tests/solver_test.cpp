@@ -4,18 +4,6 @@
 
 using namespace std;
 
-void print_deal(Deal deal)
-{
-  cout << "North hand: " << endl;
-  cout << deal.hands[0] << endl;
-  cout << "East hand: " << endl;
-  cout << deal.hands[1] << endl;
-  cout << "South hand: " << endl;
-  cout << deal.hands[2] << endl;
-  cout << "West hand: " << endl;
-  cout << deal.hands[3] << endl;
-}
-
 /* 8 cards
  * TEST: WITHOUT EQUIV CARD SHAVING (ECS)
  * 16419 ms
@@ -29,17 +17,19 @@ void print_deal(Deal deal)
  * 2454 ms
  * >> 2445 ms
  * 
+ * TEST: WITH QUICK TRICKS
+ * 911 ms
+ * 
  * 9 cards
- * TEST: ECS
- * 219959 ms
+ * TEST: ECS and QT
+ * 142322 ms
  */
 
 int main()
 {
   auto start = chrono::high_resolution_clock::now();
   Test_deals deal = Test_deals();
-  Deal deal1 = deal.data[1];
-  print_deal(deal1);
+  Deal deal1 = deal.data[3];
   Solver solve_test_1 = Solver(deal1);
   cout << "Solving deal 1: " << solve_test_1.ddSolve() << endl;
   auto stop = chrono::high_resolution_clock::now();

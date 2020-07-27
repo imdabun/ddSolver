@@ -21,7 +21,7 @@ void insert_cd(vector<Card>& target, Card& obj)
 
 Hand::Hand() {}
 
-Hand::Hand(const vector<pair<int, int>>& cards, const int dir)
+Hand::Hand(const vector<pair<int, int>>& cards, int dir)
   : direction(dir)
 {
   for (auto &p : cards) 
