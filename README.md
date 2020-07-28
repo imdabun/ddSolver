@@ -9,7 +9,10 @@ The simplest way to use this solver is to type out a hand following the format h
 ```
   deal_loading(data, "./tests/deals/<test_file_name>.txt");
 ```
-After which, compile *.\tests\solver_test.cpp* alongside all *.cpp files in *.\src*
+After which, compile *.\tests\solver_test.cpp*, e.g.
+```
+  g++ -std=c++11 .\tests\solver_test.cpp .\src\*.cpp
+```
 
 # Files
 ## Data Structures
@@ -27,7 +30,7 @@ At any point when at least one card has been played, check if a player can win t
 Not used in the current solver as the overhead needed to calculate the result exceeds the time saved from pruning.
 
 ## Tests
-Small test cases run to demonstrate key features of each implementation, under .\tests
+Small test cases run key functions of each feature
 
 # Algorithms
 The basic search algorithm highlighted in Chang's paper is used as a main structure.\

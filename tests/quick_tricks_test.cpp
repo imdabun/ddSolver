@@ -1,4 +1,4 @@
-#include "../quick_tricks.hpp"
+#include "../src/quick_tricks.hpp"
 #include "test_deals.hpp"
 
 using namespace std;

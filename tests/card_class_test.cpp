@@ -1,4 +1,4 @@
-#include "../card_class.hpp"
+#include "../src/card_class.hpp"
 
 using namespace std;
 

@@ -1,7 +1,7 @@
 #ifndef TEST_DEALS_H
 #define TEST_DEALS_H
 
-#include "../deal_parser.hpp"
+#include "../src/deal_parser.hpp"
 
 class Test_deals
 {

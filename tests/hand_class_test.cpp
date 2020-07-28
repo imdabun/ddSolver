@@ -1,5 +1,5 @@
 #include <assert.h>
-#include "../hand_class.hpp"
+#include "../src/hand_class.hpp"
 
 using namespace std;
 

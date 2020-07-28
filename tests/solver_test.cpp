@@ -1,6 +1,6 @@
 #include <chrono>
 #include "test_deals.hpp"
-#include "../solver.hpp"
+#include "../src/solver.hpp"
 
 using namespace std;
 
