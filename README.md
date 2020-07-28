@@ -33,12 +33,14 @@ Not used in the current solver as the overhead needed to calculate the result ex
 Small test cases run key functions of each feature
 
 # Algorithms
-The basic search algorithm highlighted in Chang's paper is used as a main structure.\
+The basic search algorithm highlighted in Chang's paper is used as a main structure.
+
 Various functions noted in the 2014 document are needed for the search to be done in a reasonable time:
 * Target too low or high :heavy_check_mark:
 * Quick-Tricks :heavy_check_mark:
 * Tranposition Table :x:
 * MoveOrdering :x:
+With current implementation, simpler full hands such *.\tests\deals\07.txt* can be solved in a reasonable amount of time, while most 8-card hands are solvable within 1~2 seconds.
 
 # Future Development
 This project is done as an exercise to familiarize myself with bridge search and pruning techniques. One technique to shorten solve time that is not used in the modern iteration of DDS is the single-suit lookup table as suggested in [Chang 1996](https://pdfs.semanticscholar.org/eed7/025c0ab6e5f693dff53ed7cf2605aa10d768.pdf "Building a Fast Double-Dummy Bridge Solver").
