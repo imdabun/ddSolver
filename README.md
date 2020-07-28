@@ -1,7 +1,7 @@
 # Introduction
 This is an attempt to create my own double dummy solver for bridge, based on principles highlighted in the following papers:\
 [Chang 1996](https://pdfs.semanticscholar.org/eed7/025c0ab6e5f693dff53ed7cf2605aa10d768.pdf "Building a Fast Double-Dummy Bridge Solver")\
-[Bo Haglund, Soren Hein](http://privat.bahnhof.se/wb758135/bridge/Alg-dds_x.pdf "Search Algorithms for a Bridge Double Dummy Solver")
+[Bo Haglund, Soren Hein](http://privat.bahnhof.se/wb758135/bridge/Alg-dds_x.pdf "Search Algorithms for a Bridge Double Dummy Solver")\
 The motivation for the project is due to my inability to create a solver that produces an accurate result in a reasonable time for a bridge application I wrote a year ago. 
 
 # Files
@@ -32,4 +32,5 @@ Various functions noted in the 2014 document are needed for the search to be don
 
 # Future Development
 This project is done as an exercise to familiarize myself with bridge search and pruning techniques. One technique to shorten solve time that is not used in the modern iteration of DDS is the single-suit lookup table as suggested in [Chang 1996](https://pdfs.semanticscholar.org/eed7/025c0ab6e5f693dff53ed7cf2605aa10d768.pdf "Building a Fast Double-Dummy Bridge Solver").\
+
 This idea involves pre-compiling a lookup table of single suit distributions alongside with information such as controls and entries to get a tighter bound for *ddSearch*. This can be extended to *techniques*, where positions such as finesses, simple endplays, crossruffs, etc. can be identified and cached for quick lookup.
