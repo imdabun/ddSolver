@@ -13,7 +13,7 @@ int main()
 
     cout << "Solving quick_tricks... " << endl;
     QT_Solver solver = QT_Solver(x);
-    cout << "No. of quick tricks >> " << solver.friendly_QT() << endl << endl;
+    cout << "No. of quick tricks >> " << solver.qt() << endl << endl;
   }
 return 0;
 }

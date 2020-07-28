@@ -3,9 +3,8 @@
  *  Yang Gan
  */
 
-#include "deal_class.hpp"
 #include "solver.hpp"
-#include "quick_tricks.hpp"
+#include "later_tricks.hpp"
 
 using namespace std;
 
@@ -27,7 +26,7 @@ void update_lo(deal_hashmp& memo, Play_state state, int new_lo, int max_pos)
   else
   {
     // update entry
-    (got->second).first = max (new_lo, (got->second).first);
+    (got->second).first = new_lo;
 
   }
 }
@@ -43,7 +42,7 @@ void update_hi(deal_hashmp& memo, Play_state state, int new_hi)
   else
   {
     // update entry
-    (got->second).second = min (new_hi, (got->second).second);
+    (got->second).second = new_hi;
   }
 }
 
@@ -60,6 +59,7 @@ bool Solver::ddSearch(int goal)
   }
 
   bool trick_start = false;
+
   // if this is the start of a new trick, check hashmap
   if (ds.curr_trick.size() == 4 || ds.curr_trick.empty())
   {
@@ -75,9 +75,10 @@ bool Solver::ddSearch(int goal)
 
     // find quick_tricks
     QT_Solver qt_start = QT_Solver(ds);
-    if (goal <= qt_start.friendly_QT())
+    int qt = qt_start.qt();
+    if (goal <= qt)
     {
-      update_lo(memo, ds.play_state, qt_start.friendly_QT(), search_max);
+      update_lo(memo, ds.play_state, qt, search_max);
       return true;
     }
   }

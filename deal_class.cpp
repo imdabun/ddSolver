@@ -282,16 +282,14 @@ bool Deal::last_trick()
   vector<Card> trick;
   for (int i = 0; i < 4; ++i)
   {
-    Card last = Card(-1, -1);
     for (int j = 0; j < 4; ++j)
     {
       if (!hands[i].cards[j].empty())
       {
-        last = hands[i].cards[j].front();
+        trick.push_back(hands[i].cards[j].front());
         break;
       }
     }
-    trick.push_back(last);
   }
   return trick_winner(trick, trump) == action;
 }

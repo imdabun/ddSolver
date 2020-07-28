@@ -10,12 +10,13 @@ public:
 
   Test_deals()
   {
-    deal_loading(data, "./tests/test/01.txt");
-    deal_loading(data, "./tests/test/02.txt");
-    deal_loading(data, "./tests/test/03.txt");
-    deal_loading(data, "./tests/test/04.txt");
-    deal_loading(data, "./tests/test/05.txt");
-    deal_loading(data, "./tests/test/06.txt");
+    deal_loading(data, "./tests/deals/01.txt");
+    deal_loading(data, "./tests/deals/02.txt");
+    deal_loading(data, "./tests/deals/03.txt");
+    deal_loading(data, "./tests/deals/04.txt");
+    deal_loading(data, "./tests/deals/05.txt");
+    deal_loading(data, "./tests/deals/06.txt");
+    deal_loading(data, "./tests/deals/07.txt");
   }
 };
 

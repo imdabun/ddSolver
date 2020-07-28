@@ -7,13 +7,16 @@
 
 using namespace std;
 
-QT_Solver::QT_Solver(const Deal& deal): ds(deal), 
-  entry_from{false, false, false, false}, quick_tricks{0, 0, 0, 0}
+QT_Solver::QT_Solver(const Deal& deal): ds(deal), entry_from{false, false},
+  quick_tricks{0, 0}
 {
-  if (ds.trump < 0)
-    nt_quicktricks();
-  else
-    suited_quicktricks();
+  if (ds.curr_trick.size() == 4 || ds.curr_trick.empty())
+  {
+    if (ds.trump < 0)
+      nt_quicktricks();
+    else
+      suited_quicktricks();
+  }
 }
 
 void QT_Solver::nt_quicktricks()
@@ -37,20 +40,32 @@ void QT_Solver::nt_quicktricks()
         sec_best = curr_card;
     }
 
-    if (!ds.hands[(ctrl_hand + 2) % 4].cards[suit].empty())
-      entry_from[(ctrl_hand + 2) % 4] = true;
-
-    if (top_card != -1)
+    if ((ctrl_hand - ds.action) % 2 == 0)
     {
-      auto it = ds.hands[ctrl_hand].cards[suit].rbegin();
-      to_add++;
-      while ( ++it != ds.hands[ctrl_hand].cards[suit].rend() &&
-             it->val > sec_best)
+      if (!ds.hands[(ctrl_hand + 2) % 4].cards[suit].empty())
       {
-        to_add++;
+        if (ctrl_hand == ds.action)
+          entry_from[1] = true;
+        else
+          entry_from[0] = true;
       }
+
+      if (top_card != -1)
+      {
+        auto it = ds.hands[ctrl_hand].cards[suit].rbegin();
+        to_add++;
+        while ( ++it != ds.hands[ctrl_hand].cards[suit].rend() &&
+              it->val > sec_best)
+        {
+          to_add++;
+        }
+      }
+      
+      if (ctrl_hand == ds.action)
+        quick_tricks[0] += to_add;
+      else 
+        quick_tricks[1] += to_add;
     }
-    quick_tricks[ctrl_hand] += to_add;
   }
 }
 
@@ -73,38 +88,49 @@ void QT_Solver::suited_quicktricks()
       }
     }
 
-    int opp_ctrl = 13;
-    if (suit != ds.trump)
-    {
-      int dir1 = (ctrl_hand + 1) % 2;
-      int dir2 = (ctrl_hand + 1) % 2 + 2;
-      int len1 = ds.hands[dir1].cards[suit].size();
-      int len2 = ds.hands[dir2].cards[suit].size();
-      int opp1 = ds.hands[dir1].cards[ds.trump].empty() ? 13 : len1;
-      int opp2 = ds.hands[dir2].cards[ds.trump].empty() ? 13 : len2;
-      opp_ctrl = min(opp1, opp2);
-    }
-
-    if (opp_ctrl != 0 && !ds.hands[(ctrl_hand + 2) % 4].cards[suit].empty())
-      entry_from[(ctrl_hand + 2) % 4] = true;
-
-    if (top_card != -1)
-    {
-      auto it = ds.hands[ctrl_hand].cards[suit].rbegin();
-      if (to_add < opp_ctrl) to_add ++;
-      while ( ++it != ds.hands[ctrl_hand].cards[suit].rend() &&
-             it->val > sec_best)
+    if ((ctrl_hand - ds.action) % 2 == 0)
       {
-        if (to_add < opp_ctrl) to_add ++;
+      int opp_ctrl = 13;
+      if (suit != ds.trump)
+      {
+        int dir1 = (ctrl_hand + 1) % 2;
+        int dir2 = (ctrl_hand + 1) % 2 + 2;
+        int len1 = ds.hands[dir1].cards[suit].size();
+        int len2 = ds.hands[dir2].cards[suit].size();
+        int opp1 = ds.hands[dir1].cards[ds.trump].empty() ? 13 : len1;
+        int opp2 = ds.hands[dir2].cards[ds.trump].empty() ? 13 : len2;
+        opp_ctrl = min(opp1, opp2);
       }
+
+      if (opp_ctrl != 0 && !ds.hands[(ctrl_hand + 2) % 4].cards[suit].empty())
+      {
+        if (ctrl_hand == ds.action)
+          entry_from[1] = true;
+        else
+          entry_from[0] = true;
+      }
+
+      if (top_card != -1)
+      {
+        auto it = ds.hands[ctrl_hand].cards[suit].rbegin();
+        if (to_add < opp_ctrl) to_add ++;
+        while ( ++it != ds.hands[ctrl_hand].cards[suit].rend() &&
+              it->val > sec_best)
+        {
+          if (to_add < opp_ctrl) to_add ++;
+        }
+      }
+      
+      if (ctrl_hand == ds.action)
+        quick_tricks[0] += to_add;
+      else 
+        quick_tricks[1] += to_add;
     }
-    quick_tricks[ctrl_hand] += to_add;
   }
 }
 
-int QT_Solver::friendly_QT()
+int QT_Solver::qt()
 {
-  int pard = (ds.action + 2) % 4;
-  return (entry_from[ds.action]) ? (quick_tricks[ds.action] + quick_tricks[pard])
-                            : (quick_tricks[ds.action]);
+  return (entry_from[0]) ? (quick_tricks[0] + quick_tricks[1])
+                            : (quick_tricks[0]);
 }

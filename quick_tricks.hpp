@@ -10,9 +10,9 @@ class QT_Solver
 private:
   Deal ds;
 
-  bool entry_from[4];
+  bool entry_from[2];
 
-  int quick_tricks[4];
+  int quick_tricks[2];
   
   void nt_quicktricks();
 
@@ -21,5 +21,5 @@ private:
 public:
   QT_Solver(const Deal& deal);
 
-  int friendly_QT();
+  int qt();
 };

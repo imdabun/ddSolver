@@ -4,34 +4,34 @@
 
 using namespace std;
 
-/* 8 cards
- * TEST: WITHOUT EQUIV CARD SHAVING (ECS)
- * 16419 ms
- * 16583 ms
- * 16611 ms
- * >> 16538 ms
+/* 01 >>
  * 
- * TEST: WITH EQUIV CARD SHAVING
- * 2412 ms
- * 2469 ms
- * 2454 ms
- * >> 2445 ms
+ * 02 >> 
  * 
- * TEST: WITH QUICK TRICKS
- * 911 ms
+ * 03 >> [3]
+ * 885 ms
  * 
- * 9 cards
- * TEST: ECS and QT
- * 142322 ms
+ * 04 >> [7]
+ * 131955 ms
+ * 
+ * 05 >> [4]
+ * 9 ms
+ * 
+ * 06 >> [3]
+ * 1 ms
+ * 
+ * 07 >> [9]
+ * 80955 ms 
  */
 
 int main()
 {
+  int x = 5;
   auto start = chrono::high_resolution_clock::now();
   Test_deals deal = Test_deals();
-  Deal deal1 = deal.data[3];
+  Deal deal1 = deal.data[x];
   Solver solve_test_1 = Solver(deal1);
-  cout << "Solving deal 1: " << solve_test_1.ddSolve() << endl;
+  cout << "Solving deal " << (x + 1) << ": " << solve_test_1.ddSolve() << endl;
   auto stop = chrono::high_resolution_clock::now();
   auto duration = chrono::duration_cast<chrono::microseconds>(stop - start); 
   cout << "Time taken: " << duration.count()/1000 << " ms" << endl;
