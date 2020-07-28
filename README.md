@@ -40,6 +40,7 @@ Various functions noted in the 2014 document are needed for the search to be don
 * Quick-Tricks :heavy_check_mark:
 * Tranposition Table :x:
 * MoveOrdering :x:
+* 
 With current implementation, simpler full hands such *.\tests\deals\07.txt* can be solved in a reasonable amount of time, while most 8-card hands are solvable within 1~2 seconds.
 
 # Future Development
