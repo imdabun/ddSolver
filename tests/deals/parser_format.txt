@@ -1,0 +1,15 @@
+Line no.    Description
+--------------------------------------------------------------------------------
+1           Hand on lead currently. North = 0, East = 1, etc.
+2           Trump suit. NT = -1, Clubs = 0, Diamonds = 1, Hearts = 2, Spades = 3
+3           Blank line
+4 ~ 7       North hand, starting from spades, then hearts, diamonds, clubs
+8           Blank line
+9 ~ 12      East hand in similar order.
+13          Blank line
+14 ~ 17     South hand in similar order.
+18          Blank line
+19 ~ 22     West hand in similar order.
+
+Cards must be white space separated. For examples please refer to any hand in 
+this folder.

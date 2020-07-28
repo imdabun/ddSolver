@@ -4,6 +4,13 @@ This is an attempt to create my own double dummy solver for bridge, based on pri
 [Bo Haglund, Soren Hein](http://privat.bahnhof.se/wb758135/bridge/Alg-dds_x.pdf "Search Algorithms for a Bridge Double Dummy Solver")\
 The motivation for the project is due to my inability to create a solver that produces an accurate result in a reasonable time for a bridge application I wrote a year ago. 
 
+# Usage
+The simplest way to use this solver is to type out a hand following the format highlighted in *.\tests\deals\parser_format.txt*, adding above line 13 of *.\tests\test_deals.cpp*:
+```
+  deal_loading(data, "./tests/deals/<test_file_name>.txt");
+```
+After which, compile *.\tests\solver_test.cpp* alongside all *.cpp files in *.\src*
+
 # Files
 ## Data Structures
 Simple data structures for cards, hands and deals contain methods needed to change the state of a deal, and are changed instead of copied for all search operations. Broken down into:

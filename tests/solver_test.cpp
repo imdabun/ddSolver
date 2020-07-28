@@ -26,7 +26,7 @@ using namespace std;
 
 int main()
 {
-  int x = 5;
+  int x = 0;
   auto start = chrono::high_resolution_clock::now();
   Test_deals deal = Test_deals();
   Deal deal1 = deal.data[x];
